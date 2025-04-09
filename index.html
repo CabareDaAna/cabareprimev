@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Redirecionando...</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding-top: 20%;
+    }
+  </style>
+</head>
+<body>
+  <h2>Redirecionando você para o conteúdo exclusivo...</h2>
+
+  <script>
+    // Configurações
+    const PIXEL_ID = "1311817603446349";
+    const ACCESS_TOKEN = "EAAN6kyHnyOUBO9pJ48wymeTRkJHeQGbxoTORaAYqQqwCaMMyxu94iumeCbuQVpVKvhelmyrj25cNWKKD0yhtOdU3jujn6Iic1ihgHSbnEA5WRNNe6RqThXKZAQYOXCsuQ8G5sYuA9dIjfs4SovRDsgR69bKVbZBtFSfZAfF0sbiwxYM4NLotcrjWwZDZD";
+    const REDIRECT_URL = "https://t.me/Gabirodrivm_bot";
+
+    // Captura UTMs
+    function getUTMs() {
+      const params = new URLSearchParams(window.location.search);
+      let utms = {};
+      for (const [key, value] of params.entries()) {
+        if (key.startsWith("utm_")) {
+          utms[key] = value;
+        }
+      }
+      return utms;
+    }
+
+    // Envia evento via CAPI
+    async function sendEvent() {
+      const utms = getUTMs();
+      const payload = {
+        data: [{
+          event_name: "TelegramBotClick",
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: "website",
+          event_source_url: window.location.href,
+          user_data: {
+            client_ip_address: "254.254.254.254",
+            client_user_agent: navigator.userAgent
+          },
+          custom_data: utms
+        }]
+      };
+
+      const url = `https://graph.facebook.com/v17.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}`;
+
+      try {
+        await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {
+        console.error("Erro ao enviar evento:", err);
+      } finally {
+        // Redireciona para o Telegram
+        window.location.href = REDIRECT_URL;
+      }
+    }
+
+    window.onload = () => {
+      sendEvent();
+    };
+  </script>
+</body>
+</html>
