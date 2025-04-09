@@ -19,12 +19,12 @@
   <h2>Redirecionando você para o conteúdo exclusivo...</h2>
 
   <script>
-    // Configurações
+    // CONFIGURAÇÕES
     const PIXEL_ID = "1311817603446349";
     const ACCESS_TOKEN = "EAAN6kyHnyOUBO9pJ48wymeTRkJHeQGbxoTORaAYqQqwCaMMyxu94iumeCbuQVpVKvhelmyrj25cNWKKD0yhtOdU3jujn6Iic1ihgHSbnEA5WRNNe6RqThXKZAQYOXCsuQ8G5sYuA9dIjfs4SovRDsgR69bKVbZBtFSfZAfF0sbiwxYM4NLotcrjWwZDZD";
-    const REDIRECT_URL = "https://t.me/Gabirodrivm_bot";
+    const REDIRECT_URL = "http://t.me/Gabi_centralrodriv_bot";
 
-    // Captura UTMs
+    // CAPTURA UTMs
     function getUTMs() {
       const params = new URLSearchParams(window.location.search);
       let utms = {};
@@ -36,7 +36,7 @@
       return utms;
     }
 
-    // Envia evento via CAPI
+    // ENVIA EVENTO VIA CAPI
     async function sendEvent() {
       const utms = getUTMs();
       const payload = {
@@ -64,7 +64,7 @@
       } catch (err) {
         console.error("Erro ao enviar evento:", err);
       } finally {
-        // Redireciona para o Telegram
+        // REDIRECIONA PARA O BOT
         window.location.href = REDIRECT_URL;
       }
     }
