@@ -1,77 +1,113 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Redirecionando...</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conteúdo Privado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
+      margin: 0;
+      background-color: #0f0f0f;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+    .container {
+      background-color: #1a1a1a;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 0, 100, 0.3);
       text-align: center;
-      padding-top: 20%;
+      max-width: 320px;
+    }
+    .banner {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    button {
+      flex: 1;
+      padding: 12px 0;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    .btn-sim {
+      background-color: #ff006e;
+      color: white;
+    }
+    .btn-sim:hover {
+      background-color: #d1005b;
+    }
+    .btn-nao {
+      background-color: #333;
+      color: #aaa;
+    }
+    .btn-nao:hover {
+      background-color: #444;
     }
   </style>
 </head>
 <body>
-  <h2>Redirecionando você para o conteúdo exclusivo...</h2>
+  <div class="container">
+    <img src="A_digital_graphic_design_mockup_of_a_private_conte.png" alt="Sou maior de 18" class="banner">
+    <h1>Conteúdo Privado</h1>
+    <p>Deseja acessar nosso conteúdo exclusivo?</p>
+    <div class="buttons">
+      <button class="btn-sim" onclick="acessar()">Sim</button>
+      <button class="btn-nao" onclick="nao()">Não</button>
+    </div>
+  </div>
 
   <script>
-    // CONFIGURAÇÕES
-    const PIXEL_ID = "1311817603446349";
-    const ACCESS_TOKEN = "EAAN6kyHnyOUBO9pJ48wymeTRkJHeQGbxoTORaAYqQqwCaMMyxu94iumeCbuQVpVKvhelmyrj25cNWKKD0yhtOdU3jujn6Iic1ihgHSbnEA5WRNNe6RqThXKZAQYOXCsuQ8G5sYuA9dIjfs4SovRDsgR69bKVbZBtFSfZAfF0sbiwxYM4NLotcrjWwZDZD";
-    const REDIRECT_URL = "http://t.me/Gabi_centralrodriv_bot";
+    function acessar() {
+      fetch('https://graph.facebook.com/v18.0/1311817603446349/events?access_token=EAAN6kyHnyOUBO9pJ48wymeTRkJHeQGbxoTORaAYqQqwCaMMyxu94iumeCbuQVpVKvhelmyrj25cNWKKD0yhtOdU3jujn6Iic1ihgHSbnEA5WRNNe6RqThXKZAQYOXCsuQ8G5sYuA9dIjfs4SovRDsgR69bKVbZBtFSfZAfF0sbiwxYM4NLotcrjWwZDZD', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          data: [{
+            event_name: 'TelegramBotClick',
+            event_time: Math.floor(Date.now() / 1000),
+            action_source: 'website',
+            event_source_url: window.location.href,
+            user_data: {
+              client_user_agent: navigator.userAgent
+            }
+          }]
+        })
+      });
 
-    // CAPTURA UTMs
-    function getUTMs() {
-      const params = new URLSearchParams(window.location.search);
-      let utms = {};
-      for (const [key, value] of params.entries()) {
-        if (key.startsWith("utm_")) {
-          utms[key] = value;
-        }
-      }
-      return utms;
+      setTimeout(() => {
+        window.location.href = 'http://t.me/Gabi_centralrodriv_bot';
+      }, 1500);
     }
 
-    // ENVIA EVENTO VIA CAPI
-    async function sendEvent() {
-      const utms = getUTMs();
-      const payload = {
-        data: [{
-          event_name: "TelegramBotClick",
-          event_time: Math.floor(Date.now() / 1000),
-          action_source: "website",
-          event_source_url: window.location.href,
-          user_data: {
-            client_ip_address: "254.254.254.254",
-            client_user_agent: navigator.userAgent
-          },
-          custom_data: utms
-        }]
-      };
-
-      const url = `https://graph.facebook.com/v17.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}`;
-
-      try {
-        await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-      } catch (err) {
-        console.error("Erro ao enviar evento:", err);
-      } finally {
-        // REDIRECIONA PARA O BOT
-        window.location.href = REDIRECT_URL;
-      }
+    function nao() {
+      alert('Ok! Conteúdo não acessado.');
     }
-
-    window.onload = () => {
-      sendEvent();
-    };
   </script>
 </body>
 </html>
