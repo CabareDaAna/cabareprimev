@@ -1,107 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="4;url=https://t.me/Cabareprimev_bot">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conteúdo Privado</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap" rel="stylesheet">
+  <title>Aviso +18</title>
   <style>
     body {
-      margin: 0;
-      background-color: #0f0f0f;
-      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: white;
+      margin: 0;
     }
-    .container {
-      background-color: #1a1a1a;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(255, 0, 100, 0.3);
+    .warning-box {
+      border: 4px solid red;
+      padding: 40px;
       text-align: center;
-      max-width: 320px;
+      background-color: #111;
+      box-shadow: 0 0 20px red;
+      border-radius: 10px;
+      max-width: 90%;
     }
-    h1 {
-      font-size: 22px;
-      margin-bottom: 12px;
-    }
-    p {
-      font-size: 16px;
+    .emoji {
+      font-size: 60px;
       margin-bottom: 20px;
-      color: #ccc;
     }
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    button {
-      flex: 1;
-      padding: 12px 0;
-      font-size: 16px;
+    .text {
+      font-size: 24px;
       font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-    .btn-sim {
-      background-color: #ff006e;
-      color: white;
-    }
-    .btn-sim:hover {
-      background-color: #d1005b;
-    }
-    .btn-nao {
-      background-color: #333;
-      color: #aaa;
-    }
-    .btn-nao:hover {
-      background-color: #444;
+      color: #ff4444;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Você é maior de 18 anos?</h1>
-    <p>Este conteúdo é exclusivo para maiores de idade.</p>
-    <div class="buttons">
-      <button class="btn-sim" onclick="acessar()">Sim</button>
-      <button class="btn-nao" onclick="nao()">Não</button>
-    </div>
+  <div class="warning-box">
+    <div class="emoji">⚠️</div>
+    <div class="text">Conteúdo proibido para menores de 18 anos!</div>
   </div>
-
-  <script>
-    function acessar() {
-      fetch('https://graph.facebook.com/v18.0/1311817603446349/events?access_token=EAAN6kyHnyOUBO9pJ48wymeTRkJHeQGbxoTORaAYqQqwCaMMyxu94iumeCbuQVpVKvhelmyrj25cNWKKD0yhtOdU3jujn6Iic1ihgHSbnEA5WRNNe6RqThXKZAQYOXCsuQ8G5sYuA9dIjfs4SovRDsgR69bKVbZBtFSfZAfF0sbiwxYM4NLotcrjWwZDZD', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          data: [{
-            event_name: 'TelegramBotClick',
-            event_time: Math.floor(Date.now() / 1000),
-            action_source: 'website',
-            event_source_url: window.location.href,
-            user_data: {
-              client_user_agent: navigator.userAgent
-            }
-          }]
-        })
-      });
-
-      setTimeout(() => {
-        window.location.href = 'http://t.me/Gabi_centralrodriv_bot';
-      }, 1500);
-    }
-
-    function nao() {
-      alert('Ok! Conteúdo não acessado.');
-    }
-  </script>
 </body>
 </html>
